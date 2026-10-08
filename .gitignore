@@ -10,3 +10,7 @@ uploads/video/*
 # Pomocné/testovací soubory
 _*.html
 .DS_Store
+
+# Výstup sestavení náhledu pro GitHub Pages
+_site/
+_build/
