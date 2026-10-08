@@ -1,0 +1,211 @@
+TRUHLÁŘSTVÍ KRATOCHVÍL — web s administrací
+=============================================
+
+Co je nového oproti původnímu webu
+-----------------------------------
+Stránka už není napevno v HTML, ale generuje se v PHP z databáze
+(MySQL). Po přihlášení do administrace se přímo na živé stránce dá:
+  - přepisovat libovolný text (klikněte do textu a pište),
+  - měnit hlavní fotky (hero pozadí, foto v sekci "O nás"),
+  - přidávat/mazat služby, výhody, kroky postupu, recenze a časté dotazy,
+  - zapínat/vypínat viditelnost jednotlivých sekcí pro návštěvníky,
+  - přidávat/mazat reference v galerii (fotky i videa, i víc najednou),
+  - zobrazit lištu s upozorněním úplně nahoře na webu (dovolená, akce…),
+  - upravit SEO nastavení (titulek, popis, obrázek pro sdílení) a
+    vložit měřicí ID Google Analytics — vše z administrace, bez zásahu
+    do kódu.
+
+
+1) INSTALACE NA HOSTING
+------------------------
+a) Založte si na hostingu MySQL/MariaDB databázi (název, uživatele
+   a heslo dostanete ve správě hostingu).
+
+b) V souboru config.php vyplňte:
+     DB_HOST, DB_NAME, DB_USER, DB_PASS
+   (DB_HOST je většinou "localhost").
+
+c) Do té samé databáze naimportujte soubor schema.sql — obsahuje
+   všechny tabulky a rovnou i původní texty a fotky webu, takže
+   stránka po nahrání vypadá úplně stejně jako teď.
+   (Import se dělá např. přes phpMyAdmin — záložka "Import".)
+
+d) Celý obsah této složky nahrajte na hosting (např. do /www).
+   Složky uploads/img a uploads/video musí mít práva pro zápis
+   (obvykle 755, na některých hostinzích 775) — pokud nahrávání
+   souborů v administraci nebude fungovat, zkuste práva zvýšit
+   na 777, případně se zeptejte podpory hostingu.
+
+e) Otevřete web a přihlaste se do administrace na adrese:
+     https://vasedomena.cz/admin/login.php
+   Výchozí heslo je:  trukra2026
+   Hned po prvním přihlášení si ho v pravém dolním rohu klikněte
+   na "Změnit heslo" a nastavte si vlastní!
+
+
+2) JAK SE POUŽÍVÁ ADMINISTRACE
+--------------------------------
+Po přihlášení vypadá web úplně stejně jako pro návštěvníky, jen
+navíc uvidíte:
+
+  • Přerušovaně orámovaný text = klikněte do něj a přepište.
+    Po kliknutí mimo (nebo klávesou Tab) se změna sama uloží
+    a na chvíli zezelená.
+
+  • Tlačítko "✎ Změnit fotku" na obrázcích — nahraje nový soubor
+    místo starého.
+
+  • Žlutý pruh nad každou sekcí s přepínačem — vypnutím sekci
+    okamžitě skryjete návštěvníkům (vy ji v adminu dál vidíte,
+    jen zešedlá).
+
+  • Dlaždice s "+" na konci seznamů (služby, výhody, kroky,
+    recenze, časté dotazy) — přidá novou položku, kterou hned
+    můžete přepsat. Křížek "×" v rohu položky ji smaže.
+
+  • U ikon služeb a výhod jde vybrat jinou ikonu z rozbalovací
+    nabídky pod ikonou.
+
+  • V pravém dolním rohu je plovoucí panel administrace:
+      - přepínač "Úpravy zapnuty/vypnuty" — když je vypnete,
+        web vypadá přesně jako pro návštěvníky, ale zůstáváte
+        přihlášeni (hodí se na kontrolu výsledku),
+      - odkaz na změnu hesla,
+      - odhlášení.
+
+
+3) REFERENCE (GALERIE) — přidání nové fotky/videa
+----------------------------------------------------
+V sekci Reference je úplně první dlaždice s velkým "+".
+Kliknete na ni → otevře se okno, kde vyberete:
+  - kategorii (pro filtrování — Kuchyně, Skříně, Schody…),
+  - nadpis a podtitul (nepovinné, stejné pro všechny vybrané soubory
+    v dávce — po nahrání je můžete u každé reference přepsat zvlášť),
+  - a soubory z počítače — jde vybrat i více fotek/videí najednou
+    (v okně pro výběr souboru podržte Ctrl, případně Shift, a
+    označte víc souborů, nebo na mobilu použijte "vybrat více").
+
+Typ (fotka/video) se pozná automaticky podle přípony souboru.
+Po nahrání se nové reference objeví hned za "+", v pořadí, v jakém
+jste je vybrali. Pokud by se některý soubor nepodařilo nahrát
+(např. nepodporovaný formát), ostatní se přesto nahrají a na
+problémový soubor vás administrace upozorní.
+
+Videa se nahrávají jako soubor MP4 (případně WEBM/MOV) — přehrají
+se přímo na stránce i ve zvětšeném náhledu (lightboxu). Doporučená
+velikost videa je do 60 MB, ať se stránka zbytečně nezpomaluje —
+ideálně video předem zmenšete/zkomprimujte.
+
+
+4) KONTAKTNÍ ÚDAJE (telefon, e-mail, adresa, otevírací doba)
+----------------------------------------------------------------
+Upravují se na jednom místě — v sekci "Kontakt" / poptávkový
+formulář dole na stránce, v bloku s ikonami telefonu, e-mailu
+atd. Použijí se pak automaticky všude na webu (hlavička, patička,
+poptávkový formulář) — projeví se ale až po znovunačtení stránky.
+
+Na e-mail nastavený v poli "E-mail" chodí i poptávky z formuláře.
+
+
+5) LIŠTA S UPOZORNĚNÍM
+--------------------------
+Úplně nahoře na webu (nad kontaktními údaji) může být tmavá lišta
+s upozorněním — třeba "Od 20.12. do 2.1. máme zavřeno" nebo "Nově
+nabízíme i sauny na zahradu". Ve výchozím stavu je vypnutá.
+
+Zapnete ji úplně stejně jako kteroukoli jinou sekci — v adminu
+klikněte na text lišty, napište upozornění a přepínačem v žlutém
+pruhu ji zapněte. Návštěvníkům jde lišta zavřít křížkem; dokud
+text nezměníte, zůstane jim zavřená i při další návštěvě. Jakmile
+text upravíte, lišta se všem ukáže znovu.
+
+
+6) SEO A GOOGLE ANALYTICS
+----------------------------
+V pravém dolním rohu v panelu administrace je odkaz "SEO a
+Analytics" — otevře samostatnou stránku, kde se nastavuje:
+
+  - Titulek stránky a meta popis (co se zobrazí ve výsledcích
+    vyhledávání na Googlu),
+  - klíčová slova (dnes už mají pro vyhledávače malý význam, ale
+    pole tam je, kdyby je chtěl někdo vyplnit),
+  - hlavní adresa webu (canonical URL) — vyplňte skutečnou adresu,
+    až bude web spuštěný (např. https://www.trukra.cz/),
+  - možnost dočasně zakázat indexaci ve vyhledávačích (hodí se,
+    dokud web ještě není hotový k zveřejnění),
+  - obrázek, který se zobrazí při sdílení odkazu na Facebooku,
+    WhatsAppu apod.,
+  - měřicí ID Google Analytics (tvaru G-XXXXXXXXXX) — po vyplnění
+    se na web automaticky vloží sledovací kód; necháte-li pole
+    prázdné, žádná analytika se nenačítá.
+
+Web navíc automaticky generuje strukturovaná data (JSON-LD) pro
+Google — typ "místní firma" s adresou, telefonem a otevírací
+dobou, což pomáhá při zobrazení v mapových a lokálních výsledcích.
+Tato data se berou z kontaktních údajů v sekci Kontakt, není
+potřeba je vyplňovat zvlášť.
+
+
+7) KONTAKTNÍ ÚDAJE (telefon, e-mail, adresa, otevírací doba)
+----------------------------------------------------------------
+Upravují se na jednom místě — v sekci "Kontakt" / poptávkový
+formulář dole na stránce, v bloku s ikonami telefonu, e-mailu
+atd. Použijí se pak automaticky všude na webu (hlavička, patička,
+poptávkový formulář) — projeví se ale až po znovunačtení stránky.
+
+Na e-mail nastavený v poli "E-mail" chodí i poptávky z formuláře.
+
+
+8) ADRESA ADMINISTRACE
+--------------------------
+Stačí zajet na adresu https://vasedomena.cz/admin/ — pokud jste
+přihlášeni, rovnou vás to přehodí na web v editačním režimu, pokud
+ne, zobrazí se přihlášení.
+
+Odkazy v administraci (Změnit heslo, SEO a Analytics, Odhlásit) teď
+mají hezčí adresy bez ".php" (/admin/login, /admin/heslo, /admin/seo,
+/admin/logout). Vyžaduje to na hostingu zapnutý Apache mod_rewrite —
+na běžném sdíleném hostingu (Wedos apod.) bývá zapnutý automaticky.
+Kdyby náhodou tyto odkazy hodily chybu 404, funguje web úplně stejně
+dál i po staru na adresách s ".php" (/admin/login.php, /admin/set-password.php,
+/admin/seo.php, /admin/logout.php) — nic se tím nerozbije.
+
+
+9) BEZPEČNOST
+---------------
+- Heslo do administrace hned po instalaci změňte (viz bod 1e).
+- Soubor config.php a všechny *.sql soubory nejdou stáhnout
+  prohlížečem (chrání je přiložený .htaccess) — přesto je nesdílejte.
+- Do složky uploads/ nejde nahrát ani spustit žádný PHP skript,
+  jen obrázky a videa — je to ošetřené jak na straně PHP, tak
+  přiloženým .htaccess.
+- Doporučujeme web provozovat přes HTTPS (zabezpečené přihlášení).
+
+
+10) STRUKTURA SOUBORŮ (pro případ, že to bude řešit i programátor)
+----------------------------------------------------------------------
+config.php           přístupové údaje k databázi a výchozí heslo
+schema.sql            struktura databáze + počáteční obsah webu
+upgrade-01-oznameni-seo.sql  doplněk pro DB naimportovanou ještě
+                       před přidáním upozornění a SEO/Analytics
+index.php             hlavní stránka (veřejná i v editačním režimu)
+send.php              odeslání poptávkového formuláře e-mailem
+inc/db.php             připojení k databázi (PDO)
+inc/functions.php      pomocné funkce (nastavení, sekce, nahrávání…)
+admin/index.php        přesměrování pro /admin/ (na login, nebo na web)
+admin/.htaccess        hezké adresy /admin/login, /admin/heslo, /admin/seo…
+admin/login.php        přihlášení
+admin/logout.php       odhlášení
+admin/set-password.php změna hesla
+admin/seo.php          SEO nastavení a Google Analytics
+admin/api.php          veškerá ukládání/mazání/nahrávání (AJAX)
+admin/js/admin.js       logika editačního režimu v prohlížeči
+admin/css/admin.css     vzhled editačního režimu
+css/style.css, js/main.js  původní vzhled a chování webu (menu,
+                       filtr galerie, lightbox, animace, lišta
+                       s upozorněním) — jen lightbox nově umí
+                       přehrát i video
+uploads/img, uploads/video   sem se ukládají nově nahrané soubory
+img/                   původní fotky a loga webu
+
+Přeji hodně spokojených zákazníků!

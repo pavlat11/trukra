@@ -1,0 +1,6 @@
+# Ve složce s nahranými soubory se nikdy nesmí spouštět PHP ani jiné skripty.
+<FilesMatch "\.(php|phtml|php\d|pl|py|cgi|sh|exe)$">
+  Require all denied
+</FilesMatch>
+php_flag engine off
+Options -Indexes -ExecCGI

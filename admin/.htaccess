@@ -1,0 +1,13 @@
+# Hezké adresy pro administraci — /admin/login místo /admin/login.php apod.
+# Skutečné soubory (login.php, seo.php…) zůstávají funkční i napřímo,
+# tohle je jen doplňkové hezčí přesměrování navíc.
+DirectoryIndex index.php
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  RewriteRule ^login/?$ login.php [L,QSA]
+  RewriteRule ^logout/?$ logout.php [L,QSA]
+  RewriteRule ^heslo/?$ set-password.php [L,QSA]
+  RewriteRule ^seo/?$ seo.php [L,QSA]
+</IfModule>

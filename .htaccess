@@ -1,0 +1,12 @@
+# Výchozí soubor složky — bez tohohle na některých hostinzích /admin/
+# (nebo i kořen webu) vrátí "Forbidden", protože nenajde index.html
+# a výpis adresáře je zakázaný (Options -Indexes níže).
+DirectoryIndex index.php
+
+# Zabránit přímému stažení citlivých souborů
+<FilesMatch "^(config\.php|.*\.sql)$">
+  Require all denied
+</FilesMatch>
+
+# Vypnout procházení adresářů
+Options -Indexes

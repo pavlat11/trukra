@@ -1,0 +1,12 @@
+# Skutečná konfigurace s přístupy do databáze — nikdy nenahrávat
+config.php
+
+# Nahrané soubory z administrace (fotky/videa klientů)
+uploads/img/*
+uploads/video/*
+!uploads/img/.gitkeep
+!uploads/video/.gitkeep
+
+# Pomocné/testovací soubory
+_*.html
+.DS_Store
