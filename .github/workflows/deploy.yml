@@ -1,0 +1,51 @@
+# Automatické nasazení na hosting přes FTP při každé změně v main.
+# Dokud nenastavíte FTP údaje (Settings → Secrets and variables → Actions),
+# workflow se jen přeskočí a nic nenasazuje.
+name: Nasazení na hosting
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Zkontrolovat FTP údaje
+        id: check
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USER: ${{ secrets.FTP_USER }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          if [ -z "$FTP_SERVER" ] || [ -z "$FTP_USER" ] || [ -z "$FTP_PASSWORD" ]; then
+            echo "FTP údaje nejsou nastavené — nasazení se přeskakuje."
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.check.outputs.enabled == 'true'
+
+      - name: Nahrát na hosting
+        if: steps.check.outputs.enabled == 'true'
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ${{ secrets.FTP_PROTOCOL || 'ftp' }}
+          server-dir: ${{ secrets.FTP_DIR || '/' }}
+          # Tyto věci na hostingu zůstávají nedotčené (config.php s přístupy do DB
+          # a fotky/videa nahrané přes administraci).
+          exclude: |
+            **/.git*
+            **/.git*/**
+            .github/**
+            config.php
+            uploads/img/**
+            uploads/video/**
+            README.md
+            **/*.sql
